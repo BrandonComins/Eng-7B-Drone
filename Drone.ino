@@ -228,14 +228,19 @@ void startI2Cdev(){
 }
 
 void getGyro(){
- delay(100); //gives time to allow Gyro to buffer
-  if (!dmpReady) return;
-    Serial.print("not ready");
-  if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) {
-    mpu.dmpGetQuaternion(&q, fifoBuffer);
-    mpu.dmpGetGravity(&gravity, &q);
-    mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-    mpu.dmpGetGyro(&gy, fifoBuffer);
+ long interval = 150;
+ long previousMillis = 0;
+ unsigned long currentMillis = millis();
+    if(currentMillis - previousMillis > interval) {
+        previousMillis = currentMillis;
+      if (!dmpReady) return;
+        Serial.print("not ready");
+      if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) {
+        mpu.dmpGetQuaternion(&q, fifoBuffer);
+        mpu.dmpGetGravity(&gravity, &q);
+        mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+        mpu.dmpGetGyro(&gy, fifoBuffer);
+    }
   }
 }
 
