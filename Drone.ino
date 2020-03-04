@@ -146,8 +146,9 @@ void loop() {
     
   for (i = 0; i< blocks;i++){
     if(pixy.ccc.blocks[i].m_signature==red){
-      getDistance();
       pulseLED(ledRed, on);
+      getDistance();
+      
 //      Serial.println(getDistance());
       
       if(getDistance() <= highDistance && getDistance() >= lowDistance){
@@ -164,8 +165,8 @@ void loop() {
         }
       }
     else if(pixy.ccc.blocks[i].m_signature==blue){
-      getDistance();
       pulseLED(ledBlue, on);
+      getDistance();
       
      if(getDistance() <= highDistance && getDistance() >= lowDistance){
        pulseLED(ledGreen, on);
@@ -187,7 +188,6 @@ void loop() {
          pulseLED(ledRed, off);
          pulseLED(ledBlue, off);
          pulseLED(ledGreen, off);
-         Serial.println("No Signature");
       }
   }       
 
